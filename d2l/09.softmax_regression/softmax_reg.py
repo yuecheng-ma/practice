@@ -28,9 +28,9 @@ def save_images(imgs, num_rows, num_cols, titles=None, scale=1.5, save_path='out
     plt.close(fig)
 
 def load_data_fashion_mnist(batch_size):
-    train_dataset_dir = "/workspace/deepleaning/dataset"
+    train_dataset_dir = "/workspace/dataset"
     mnist_train = torchvision.datasets.FashionMNIST(root=train_dataset_dir, train=True, transform=transforms.ToTensor(), download=True)
-    test_dataset_dir = "/workspace/deepleaning/dataset"
+    test_dataset_dir = "/workspace/dataset"
     mnist_test = torchvision.datasets.FashionMNIST(root=test_dataset_dir, train=False, transform=transforms.ToTensor(), download=True)
 
     train_dataloader = DataLoader(dataset=mnist_train, batch_size=batch_size, shuffle=True, num_workers=4)
@@ -51,7 +51,6 @@ class SoftmaxReg():
         # probs = self.softmax_layer(logits)
         probs = self.net(x)
         return probs
-
 
 def calcu_accuracy(pred: torch.Tensor, gt: torch.Tensor):
     if len(pred.shape) > 1 and pred.shape[1] > 1:
