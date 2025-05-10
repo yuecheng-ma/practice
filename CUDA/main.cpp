@@ -1,20 +1,20 @@
-#include "gemm/cuda_gemm.h"
+#include <naive_conv2d.h>
 #include <bits/stdc++.h>
 
-void Print(const std::vector<float>& mat) {
-    for(const auto& num: mat) {
-        std::cout << num << " ";
-    }
-    std::cout << std::endl;
-}
-
 int main() {
-    std::vector<float> a{1, 2, 3, 4, 5, 6};    // 2*3
-    std::vector<float> b{7, 8, 9, 10, 11, 12}; // 3*2
-    std::vector<float> c(4, 0.0f); // 2*2
+    auto x = torch::arange(1, 17).view({1, 1, 4, 4}).to(torch::kFloat);
+    std::cout << x.sum().item<float>() << std::endl;
 
-    cuda_gemm(a.data(), b.data(), c.data(), 2, 3, 2);
-    Print(c);
+    std::shared_ptr<prac::nn::Conv2d> conv2d = std::make_shared<prac::nn::NaiveConv2d>(1, 1, 3, 1, 1, false);
+
+    {
+        torch::NoGradGuard no_grad;
+        conv2d->SetWeight(torch::ones_like(conv2d->GetWeight()));
+    }
+
+    auto output = conv2d->forward(x);
+    std::cout << output << std::endl;
+    std::cout << output.sizes() << std::endl;
 
     return 0;
 }
