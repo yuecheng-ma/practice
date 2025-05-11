@@ -40,15 +40,12 @@ def load_data_fashion_mnist(batch_size):
 
 class SoftmaxReg():
     def __init__(self, input_dim, num_classes):
-        self.net = nn.Sequential(nn.Flatten(), nn.Linear(input_dim, num_classes), nn.Softmax(dim=1))
+        self.net = nn.Sequential(nn.Flatten(), nn.Linear(input_dim, num_classes))
 
         self.loss = nn.CrossEntropyLoss()
         self.trainer = torch.optim.SGD(self.net.parameters(), lr=0.1)
 
     def forward(self, x):
-        # x = self.flatten_layer(x)
-        # logits = self.linear_layer(x)
-        # probs = self.softmax_layer(logits)
         probs = self.net(x)
         return probs
 

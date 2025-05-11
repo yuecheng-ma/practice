@@ -19,11 +19,10 @@ class SoftmaxRegression(nn.Module):
     def __init__(self, num_inputs, num_outputs):
         super().__init__()
         self._linear = nn.Linear(num_inputs, num_outputs)
-        self._softmax = nn.Softmax(dim=1)
 
     def forward(self, inputs):
         inputs = inputs.view(inputs.shape[0], -1)
-        return self._softmax(self._linear(inputs))
+        return self._linear(inputs)
 
 class MetricsPlotter:
     def __init__(self):
